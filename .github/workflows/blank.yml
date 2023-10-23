@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          repository: 'QuiqueBarberan/load-custom-vars'
       - name: Read value from Properties-file
         run: |
           source ./src/main/resources/config.properties
