@@ -1,0 +1,17 @@
+name: CI
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Read value from Properties-file
+        run: |
+          source ./src/main/resources/config.properties
+          echo 'ANDROID_APK_PATH=${androidApkPath}' >> $GITHUB_ENV
+          echo 'ANDROID_APK_NAME=${androidApkName}' >> $GITHUB_ENV
+      - name: read vars
+        run: |
+          echo "${{ env.ANDROID_APK_PATH }}/${{ env.ANDROID_APK_NAME }}"
+          echo $ANDROID_APK_PATH/$ANDROID_APK_NAME
