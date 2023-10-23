@@ -10,11 +10,9 @@ jobs:
         run: |
           source ./src/main/resources/config.properties
           echo $androidApkPath/$androidApkName
-          echo 'ANDROID_APK_PATH=${androidApkPath}' >> $GITHUB_ENV
-          echo 'ANDROID_APK_NAME=${androidApkName}' >> $GITHUB_ENV
+          echo "ANDROID_APK_PATH=${androidApkPath}" >> $GITHUB_ENV
+          echo "ANDROID_APK_NAME=${androidApkName}" >> $GITHUB_ENV
       - name: read vars
         run: |
           echo "${{ env.ANDROID_APK_PATH }}/${{ env.ANDROID_APK_NAME }}"
-          echo $ANDROID_APK_PATH/$ANDROID_APK_NAME
-          echo $androidApkPath/$androidApkName
 
