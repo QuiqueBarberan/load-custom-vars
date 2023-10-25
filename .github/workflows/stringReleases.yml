@@ -1,0 +1,29 @@
+name: Los40 Deployment
+env:
+  filename-apk-releasedebuggable: "app-los40-releaseDebuggable.apk"
+  filename-apk-release:           "app-los40-release.apk"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_name:
+        description: 'Version name'
+        required: true
+        default: '1.0.0'
+        type: string
+      upload_debug:
+        description: 'Upload debug version to Firebase'
+        type: boolean
+        required: true
+        default: false
+      upload_release:
+        description: 'Upload to Google Play (Internal Testing)'
+        type: boolean
+        required: true
+        default: false
+jobs:
+  JobTestString:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Uno
+        run: echo uno
