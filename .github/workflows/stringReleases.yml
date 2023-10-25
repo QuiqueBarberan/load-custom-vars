@@ -32,5 +32,5 @@ jobs:
             ARRAY+=("${{ env.filename-apk-release }}")
           fi
           # Convierte el array en una cadena separada por comas
-          STRING=$(IFS=,; echo "${ARRAY[*]}")
+          STRING=$(IFS=, ; echo "${ARRAY[*]}")
           echo $STRING
