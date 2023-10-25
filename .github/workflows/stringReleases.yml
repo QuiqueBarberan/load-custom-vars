@@ -21,4 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Uno
-        run: echo uno
+        run: |
+          # Inicializa un array vacío
+          ARRAY=()
+          # Añade valores al array basados en los parámetros
+          if [ "${{ inputs.upload_debug }}" = "true" ]; then
+            ARRAY+=("${{ env.filename-apk-releasedebuggable }}")
+          fi
+          if [ "${{ inputs.upload_release }}" = "true" ]; then
+            ARRAY+=("${{ env.filename-apk-release }}")
+          fi
+          # Convierte el array en una cadena separada por comas
+          STRING=$(IFS=,; echo "${ARRAY[*]}")
+          echo $STRING
