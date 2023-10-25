@@ -1,23 +1,18 @@
-name: Los40 Deployment
+name: Mi workflow
 env:
-  filename-apk-releasedebuggable: "app-los40-releaseDebuggable.apk"
-  filename-apk-release:           "app-los40-release.apk"
+  filename-apk-releasedebuggable: "valor1"
+  filename-apk-release:           "valor2"
 
 on:
   workflow_dispatch:
     inputs:
-      version_name:
-        description: 'Version name'
-        required: true
-        default: '1.0.0'
-        type: string
       upload_debug:
-        description: 'Upload debug version to Firebase'
+        description: 'Upload debug version'
         type: boolean
         required: true
         default: false
       upload_release:
-        description: 'Upload to Google Play (Internal Testing)'
+        description: 'Upload to Production'
         type: boolean
         required: true
         default: false
