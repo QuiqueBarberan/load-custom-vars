@@ -66,7 +66,7 @@ jobs:
       APK_DEBUG_NAME: ${{ steps.apkdebugname.outputs.apkdebugname }}
     steps:
       - name: Download Artifact ReleaseDebuggable
-        if: ${{ inputs.upload_debug }}
+        if: ${{ needs.job1.status == 'success' }}
         continue-on-error: true
         uses: actions/download-artifact@v3
         with:
@@ -74,11 +74,12 @@ jobs:
 
       - name: Set output apkdebugname
         id: apkdebugname
+        if: ${{ needs.job1.status == 'success' }}
         continue-on-error: true
         run: echo "apkdebugname=${{ vars.APK_DEBUG_NAME }}" >> "$GITHUB_OUTPUT"
 
       - name: Download Artifact Release
-        if: ${{ inputs.upload_release }}
+        if: ${{ needs.job2.status == 'success' }}
         continue-on-error: true
         uses: actions/download-artifact@v3
         with:
@@ -91,10 +92,10 @@ jobs:
           # Inicializa un array vacío
           ARRAY=()
           # Añade valores al array basados en los parámetros
-          if [ "${{ needs.job1.result }}" = "sucess" ]; then
+          if [ "${{ needs.job1.status }}" = "sucess" ]; then
             ARRAY+=("${{ vars.APK_DEBUG_NAME }}")
           fi
-          if [ "${{ needs.job2.result }}" = "sucess" ]; then
+          if [ "${{ needs.job2.status }}" = "sucess" ]; then
             ARRAY+=("${{ vars.APK_NAME }}")
           fi
           # Convierte el array en una cadena separada por comas
