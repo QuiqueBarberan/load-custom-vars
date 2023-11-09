@@ -1,4 +1,4 @@
-name: Ejemplo de flujo de trabajo
+name: Jobs, needs y fallos
 
 on:
   workflow_dispatch:
