@@ -65,6 +65,13 @@ jobs:
     outputs:
       APK_DEBUG_NAME: ${{ steps.apkdebugname.outputs.apkdebugname }}
     steps:
+      - name: Debug step
+        run: |
+          echo ${{ needs.job1.result }}
+          echo ${{ needs.job2.result }}
+          echo ${{ needs.job1.status }}
+          echo ${{ needs.job2.status }}
+    
       - name: Download Artifact ReleaseDebuggable
         if: ${{ needs.job1.status == 'success' }}
         continue-on-error: true
@@ -74,7 +81,7 @@ jobs:
 
       - name: Set output apkdebugname
         id: apkdebugname
-        if: ${{ needs.job1.status == 'success' }}
+        if: ${{ needs.job2.status == 'success' }}
         continue-on-error: true
         run: echo "apkdebugname=${{ vars.APK_DEBUG_NAME }}" >> "$GITHUB_OUTPUT"
 
