@@ -91,10 +91,10 @@ jobs:
           # Inicializa un array vacío
           ARRAY=()
           # Añade valores al array basados en los parámetros
-          if [ "${{ inputs.upload_debug }}" = "true" ]; then
+          if [ "${{ needs.job1.result }}" = "sucess" ]; then
             ARRAY+=("${{ vars.APK_DEBUG_NAME }}")
           fi
-          if [ "${{ inputs.upload_release }}" = "true" ]; then
+          if [ "${{ needs.job2.result }}" = "sucess" ]; then
             ARRAY+=("${{ vars.APK_NAME }}")
           fi
           # Convierte el array en una cadena separada por comas
