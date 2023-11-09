@@ -32,7 +32,7 @@ jobs:
     environment: ${{ inputs.environment }}
     steps:
       - name: step1.1
-        run: echo "123456" > archivo.txt
+        run: echo "123456" > archivo1.txt
 
       - name: Generate artifact release 
         uses: actions/upload-artifact@v3
@@ -44,7 +44,7 @@ jobs:
     environment: ${{ inputs.environment }}
     steps:
       - name: step2.1
-        run: echo "567890" > archivo.txt
+        run: echo "567890" > archivo2.txt
 
       - name: Generate artifact release
         uses: actions/upload-artifact@v3
