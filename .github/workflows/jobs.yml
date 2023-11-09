@@ -2,31 +2,115 @@ name: Jobs, needs y fallos
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        options:
+          - ENV1
+          - ENV2
+        type: choice
+      version_name:
+        description: 'Version name'
+        required: true
+        default: '1.0.0'
+        type: string
+      upload_debug:
+        description: 'Upload debug version to Firebase'
+        type: boolean
+        required: true
+        default: true
+      upload_release:
+        description: 'Upload to Google Play (Internal Testing)'
+        type: boolean
+        required: true
+        default: true
 
 jobs:
   job1:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
-      - name: Job 1
-        run: echo "Job 1"
+      - name: step1.1
+        run: echo "123456" > archivo.txt
+
+      - name: Generate artifact release 
+        uses: actions/upload-artifact@v3
+        with:
+          name: archivo1.txt
+          path: archivo1.txt
   job2:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
-      - name: Job 2
-        run: |
-          echo "Job 2"
-          exit 2
+      - name: step2.1
+        run: echo "567890" > archivo.txt
+
+      - name: Generate artifact release
+        uses: actions/upload-artifact@v3
+        with:
+          name: archivo2.txt
+          path: archivo2.txt
+
+      - name: step exit
+        run: exit 2
+
   job3:
     runs-on: ubuntu-latest
     needs: [job1, job2]
     if: ${{ always() }}
+    environment: ${{ inputs.environment }}
+    outputs:
+      APK_DEBUG_NAME: ${{ steps.apkdebugname.outputs.apkdebugname }}
     steps:
-      - name: Job 3
-        run: echo "Job 3"
+      - name: Download Artifact ReleaseDebuggable
+        if: ${{ inputs.upload_debug }}
+        continue-on-error: true
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ vars.APK_DEBUG_NAME }}
+
+      - name: Set output apkdebugname
+        id: apkdebugname
+        continue-on-error: true
+        run: echo "apkdebugname=${{ vars.APK_DEBUG_NAME }}" >> "$GITHUB_OUTPUT"
+
+      - name: Download Artifact Release
+        if: ${{ inputs.upload_release }}
+        continue-on-error: true
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ vars.APK_NAME }}
+
+      - name: Preparar string con nombres de assets
+        id: assets
+        continue-on-error: true
+        run: |
+          # Inicializa un array vacío
+          ARRAY=()
+          # Añade valores al array basados en los parámetros
+          if [ "${{ inputs.upload_debug }}" = "true" ]; then
+            ARRAY+=("${{ vars.APK_DEBUG_NAME }}")
+          fi
+          if [ "${{ inputs.upload_release }}" = "true" ]; then
+            ARRAY+=("${{ vars.APK_NAME }}")
+          fi
+          # Convierte el array en una cadena separada por comas
+          ASSETS=$(IFS=,; echo "${ARRAY[*]}")
+          echo "ASSETS_NAMES=$ASSETS" >> $GITHUB_OUTPUT
+      - name: Create Pre-Release
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          artifacts: ${{steps.assets.outputs.ASSETS_NAMES}}
+          allowUpdates: true
+          generateReleaseNotes: true
+          prerelease: true
+          tag: ${{ inputs.version_name }}
+
   job4:
     runs-on: ubuntu-latest
     needs: [job3]
-    if: ${{ needs.job1.status == 'success' &&  needs.job2.status != 'success' }}
+    if: ${{ inputs.environment == 'ENV1' && needs.job2.status != 'success' }}
     steps:
       - name: Job 4
         run: echo "Job 4"
