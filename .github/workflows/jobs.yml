@@ -30,6 +30,7 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    continue-on-error: true
     steps:
       - name: step1.1
         run: echo "123456" > archivo1.txt
@@ -42,6 +43,7 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    continue-on-error: true
     steps:
       - name: step2.1
         run: echo "567890" > archivo2.txt
