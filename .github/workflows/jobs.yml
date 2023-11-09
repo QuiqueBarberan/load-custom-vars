@@ -30,7 +30,6 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    continue-on-error: true
     steps:
       - name: step1.1
         run: echo "123456" > archivo1.txt
@@ -43,7 +42,6 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    continue-on-error: true
     steps:
       - name: step2.1
         run: echo "567890" > archivo2.txt
@@ -65,12 +63,12 @@ jobs:
     outputs:
       APK_DEBUG_NAME: ${{ steps.apkdebugname.outputs.apkdebugname }}
     steps:
-      - name: Debug step
+      - name: Debug job1
         run: |
-          echo ${{ needs.job1.result }}
-          echo ${{ needs.job2.result }}
-          echo ${{ needs.job1.status }}
-          echo ${{ needs.job2.status }}
+          echo ${{ toJSON(needs.job1) }}
+      - name: Debug job2
+        run: |
+          echo ${{ toJSON(needs.job2) }}
     
       - name: Download Artifact ReleaseDebuggable
         if: ${{ needs.job1.status == 'success' }}
