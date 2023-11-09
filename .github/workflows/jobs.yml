@@ -1,0 +1,32 @@
+name: Ejemplo de flujo de trabajo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job 1
+        run: echo "Job 1"
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job 2
+        run: |
+          echo "Job 2"
+          exit 2
+  job3:
+    runs-on: ubuntu-latest
+    needs: [job1, job2]
+    if: ${{ always() }}
+    steps:
+      - name: Job 3
+        run: echo "Job 3"
+  job4:
+    runs-on: ubuntu-latest
+    needs: [job3]
+    if: ${{ needs.job1.status == 'success' &&  needs.job2.status != 'success' }}
+    steps:
+      - name: Job 4
+        run: echo "Job 4"
