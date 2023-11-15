@@ -11,19 +11,19 @@ jobs:
         environment: [ENV1, ENV2, ENV3, ENV4]
     steps:
       - name: step1.1
-        run: echo "123456" > ${{ vars.APK_NAME }}
+        run: echo "123456" > ${{ vars.FILE_PART1 }}
 
       - name: Generate artifact release 
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ vars.APK_NAME }}
-          path: ${{ vars.APK_NAME }}
+          name: ${{ vars.FILE_PART1 }}
+          path: ${{ vars.FILE_PART1 }}
 
       - name: step1.2
-        run: echo "567890" > ${{ vars.APK_DEBUG_NAME }}
+        run: echo "567890" > ${{ vars.FILE_PART2 }}
 
       - name: Generate artifact release 
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ vars.APK_DEBUG_NAME }}
-          path: ${{ vars.APK_DEBUG_NAME }}
+          name: ${{ vars.FILE_PART2 }}
+          path: ${{ vars.FILE_PART2 }}
