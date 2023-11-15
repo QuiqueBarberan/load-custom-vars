@@ -1,23 +1,15 @@
 name: Test matrix
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       environment:
         description: 'Environment'
         required: true
-        options:
-          - '[ENV1]'
-          - '[ENV4]'
-          - '[ENV1, ENV2, ENV3]'
-          - '[ENV1, ENV3]'
-        type: choice
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: ${{ toJSON(inputs.environment) }}
+    environment: ${{ inputs.environment }}
     steps:
       - name: step1.1
         run: echo "123456" > ${{ vars.FILE_PART1 }}
