@@ -7,18 +7,18 @@ on:
         required: true
         options:
           - ENV1
-          - ENV2
-          - ENV3
           - ENV4
+          - ENV1, ENV2, ENV3
+          - ENV1, ENV3
         type: choice
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ${{ matrix.environment }}
-    strategy:
-      matrix:
-        environment: ${{ input.environment }}
+    environment: ${{ input.environment }}
+    # strategy:
+    #   matrix:
+    #     environment: ${{ input.environment }}
     steps:
       - name: step1.1
         run: echo "123456" > ${{ vars.FILE_PART1 }}
