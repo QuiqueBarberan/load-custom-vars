@@ -23,3 +23,4 @@ jobs:
           envs="${{ inputs.environment }}"
           matrix=$(echo $envs | jq -cR 'split(",") | .[]' | jq -s '[.[] | { path: . }]' | jq -c '{ include: . }')
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo $matrix
