@@ -19,7 +19,8 @@ jobs:
       matrix: |
           ${{ steps.matrix.outputs.matrix }}
     steps:
-      - run: |
+      - name: matrix
+        run: |
           envs="${{ inputs.environment }}"
           matrix=$(echo $envs | jq -cR 'split(",") | .[]' | jq -s '[.[] | { environment: . }]' | jq -c '{ include: . }')
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
