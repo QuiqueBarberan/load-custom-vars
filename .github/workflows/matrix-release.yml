@@ -10,7 +10,7 @@ on:
           - ENV2
           - ENV3
           - ENV4
-        type: choice
+        type: multiple
 jobs:
   build:
     runs-on: ubuntu-latest
