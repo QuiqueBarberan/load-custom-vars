@@ -18,7 +18,7 @@ jobs:
     environment: ${{ matrix.several }}
     strategy:
       matrix:
-        several: ${{ inputs.environment }}
+        several: '${{ inputs.environment }}'
     steps:
       - name: step1.1
         run: echo "123456" > ${{ vars.FILE_PART1 }}
