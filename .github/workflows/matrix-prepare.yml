@@ -29,6 +29,6 @@ jobs:
     needs: [matrix]
     uses: ./.github/workflows/matrix-release.yml
     with:
-      environment: ${{ matrix.incluede.environment }}
+      environment: ${{ matrix.include.environment }}
     strategy:
       matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
