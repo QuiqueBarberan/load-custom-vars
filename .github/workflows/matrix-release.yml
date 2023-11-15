@@ -1,7 +1,16 @@
 name: Test matrix
 on:
   workflow_dispatch
-
+    inputs:
+      environments:
+        description: 'Environment'
+        required: true
+        options:
+          - ENV1
+          - ENV2
+          - ENV3
+          - ENV4
+        type: multiple
 jobs:
   build:
     runs-on: ubuntu-latest
