@@ -15,7 +15,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: ENV1, ENV2, ENV3
     # strategy:
     #   matrix:
     #     environment: ${{ input.environment }}
