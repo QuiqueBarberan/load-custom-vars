@@ -15,10 +15,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ENV1, ENV2, ENV3
-    # strategy:
-    #   matrix:
-    #     environment: ${{ input.environment }}
+    environment: ${{ matrix.several }}
+    strategy:
+      matrix:
+        several: ${{ inputs.environment }}
     steps:
       - name: step1.1
         run: echo "123456" > ${{ vars.FILE_PART1 }}
