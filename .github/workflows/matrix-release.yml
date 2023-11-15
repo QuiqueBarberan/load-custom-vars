@@ -18,7 +18,7 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       matrix:
-        environment: ${{ inputs.environment }}
+        environment: ${{ input.environment }}
     steps:
       - name: step1.1
         run: echo "123456" > ${{ vars.FILE_PART1 }}
