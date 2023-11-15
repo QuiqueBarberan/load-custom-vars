@@ -25,26 +25,26 @@ jobs:
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
           echo $matrix
 
-    build:
-      runs-on: ubuntu-latest
-      needs: [prep-matrix]
-      strategy:
-        matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
-      steps:
-        - name: step1.1
-          run: echo "123456" > ${{ vars.FILE_PART1 }}
+  build:
+    runs-on: ubuntu-latest
+    needs: [prep-matrix]
+    strategy:
+      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+    steps:
+      - name: step1.1
+        run: echo "123456" > ${{ vars.FILE_PART1 }}
 
-        - name: Generate artifact release 
-          uses: actions/upload-artifact@v3
-          with:
-            name: ${{ vars.FILE_PART1 }}
-            path: ${{ vars.FILE_PART1 }}
+      - name: Generate artifact release 
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ vars.FILE_PART1 }}
+          path: ${{ vars.FILE_PART1 }}
 
-        - name: step1.2
-          run: echo "567890" > ${{ vars.FILE_PART2 }}
+      - name: step1.2
+        run: echo "567890" > ${{ vars.FILE_PART2 }}
 
-        - name: Generate artifact release 
-          uses: actions/upload-artifact@v3
-          with:
-            name: ${{ vars.FILE_PART2 }}
-            path: ${{ vars.FILE_PART2 }}
+      - name: Generate artifact release 
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ vars.FILE_PART2 }}
+          path: ${{ vars.FILE_PART2 }}
