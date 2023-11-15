@@ -11,15 +11,14 @@ on:
           - ENV3
           - ENV4
         type: choice
-      environment2:
-        type: environment
+
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: ${{ matrix.environment }}
     strategy:
       matrix:
-        environment: [ENV1, ENV2, ENV3, ENV4]
+        environment: ${{ inputs.environment }}
     steps:
       - name: step1.1
         run: echo "123456" > ${{ vars.FILE_PART1 }}
