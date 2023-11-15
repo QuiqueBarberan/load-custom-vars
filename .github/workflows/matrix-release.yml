@@ -10,7 +10,9 @@ on:
           - ENV2
           - ENV3
           - ENV4
-        type: multiple
+        type: choice
+      environment2:
+        type: environment
 jobs:
   build:
     runs-on: ubuntu-latest
