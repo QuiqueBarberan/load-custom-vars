@@ -30,7 +30,7 @@ jobs:
     needs: [prep-matrix]
     environment: ${{ matrix.environment }}
     strategy:
-      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.prep-matrix.outputs.matrix) }}
     steps:
       - name: step1.1
         run: echo "123456" > ${{ vars.FILE_PART1 }}
