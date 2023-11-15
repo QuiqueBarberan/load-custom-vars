@@ -1,8 +1,8 @@
 name: Test matrix
 on:
-  workflow_dispatch
+  workflow_dispatch:
     inputs:
-      environments:
+      environment:
         description: 'Environment'
         required: true
         options:
