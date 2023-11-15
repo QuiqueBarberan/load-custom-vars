@@ -5,6 +5,7 @@ on:
       environment:
         description: 'Environment'
         required: true
+        type: string
 
 jobs:
   build:
