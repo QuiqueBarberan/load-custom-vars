@@ -1,0 +1,25 @@
+name: Test matrix - Preparation
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        options:
+          - 'ENV1'
+          - 'ENV4'
+          - 'ENV1, ENV2, ENV3'
+          - 'ENV1, ENV3'
+        type: choice
+jobs:
+  prep-matrix:
+    name: Prepare Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: |
+          ${{ steps.matrix.outputs.matrix }}
+    steps:
+      run: |
+        envs="${{ inputs.environment }}"
+        matrix=$(echo $envs | jq -cR 'split(",") | .[]' | jq -s '[.[] | { path: . }]' | jq -c '{ include: . }')
+        echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
