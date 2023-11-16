@@ -28,6 +28,7 @@ jobs:
 
   build:
     needs: [matrix]
+    if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] }}
     uses: ./.github/workflows/matrix-release.yml
     with:
       environment: ${{ matrix.environment }}
