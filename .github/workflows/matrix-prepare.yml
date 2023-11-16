@@ -36,11 +36,11 @@ jobs:
         id: take
         run: echo ${{ needs.matrix.outputs.matrix }}
 
-#  build:
-#    needs: [matrix]
-#    if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] }}
-#    uses: ./.github/workflows/matrix-release.yml
-#    with:
-#      environment: ${{ matrix.environment }}
-#    strategy:
-#      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+  build:
+    needs: [matrix]
+    if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] }}
+    uses: ./.github/workflows/matrix-release.yml
+    with:
+      environment: ${{ matrix.environment }}
+    strategy:
+      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
