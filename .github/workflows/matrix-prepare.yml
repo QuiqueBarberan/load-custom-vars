@@ -20,6 +20,7 @@ jobs:
           ${{ steps.matrix.outputs.matrix }}
     steps:
       - name: matrix
+        id: matrix
         run: |
           envs="${{ inputs.environment }}"
           matrix=$(echo $envs | jq -cR 'split(",") | .[]' | jq -s '[.[] | { environment: . }]' | jq -c '{ include: . }')
