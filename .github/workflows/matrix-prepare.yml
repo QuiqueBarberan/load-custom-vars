@@ -26,11 +26,20 @@ jobs:
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
           echo $matrix
 
-  build:
+  takevalue:
+    name: Take Value
     needs: [matrix]
-    if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] }}
-    uses: ./.github/workflows/matrix-release.yml
-    with:
-      environment: ${{ matrix.environment }}
-    strategy:
-      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: take
+        id: take
+        run: echo ${{ needs.matrix.outputs.matrix }}
+
+#  build:
+#    needs: [matrix]
+#    if: ${{ fromJson(needs.matrix.outputs.matrix).include[0] }}
+#    uses: ./.github/workflows/matrix-release.yml
+#    with:
+#      environment: ${{ matrix.environment }}
+#    strategy:
+#      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
