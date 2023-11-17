@@ -44,3 +44,20 @@ jobs:
       environment: ${{ matrix.environment }}
     strategy:
       matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+
+  Create-Release:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: tempartifacts
+
+      - name: Create Pre-Release
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          artifacts: tempartifacts/
+          allowUpdates: true
+          generateReleaseNotes: true
+          prerelease: true
