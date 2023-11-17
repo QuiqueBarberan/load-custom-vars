@@ -57,7 +57,7 @@ jobs:
       - name: Create Pre-Release
         uses: ncipollo/release-action@v1.13.0
         with:
-          artifacts: $(ls -m tempartifacts)
+          artifacts: $(ls -m ${{ github.workspace }}/tempartifacts)
           allowUpdates: true
           generateReleaseNotes: true
           prerelease: true
