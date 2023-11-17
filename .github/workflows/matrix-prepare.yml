@@ -54,10 +54,14 @@ jobs:
         with:
           path: tempartifacts
 
+      - name: List File
+        id: listfiles
+        run: echo "listfiles=$(ls -m tempartifacts)" >> "$GITHUB_OUTPUT"
+
       - name: Create Pre-Release
         uses: ncipollo/release-action@v1.13.0
         with:
-          artifacts: $(ls -m ${{ github.workspace }}/tempartifacts)
+          artifacts: ${{ steps.listfiles.outputs.listfiles }}
           allowUpdates: true
           generateReleaseNotes: true
           prerelease: true
