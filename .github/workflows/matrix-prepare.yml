@@ -56,7 +56,7 @@ jobs:
 
       - name: List File
         id: listfiles
-        run: echo "listfiles=$(ls -m tempartifacts)" >> "$GITHUB_OUTPUT"
+        run: echo "listfiles="$(ls -m tempartifacts) >> "$GITHUB_OUTPUT"
 
       - name: Create Pre-Release
         uses: ncipollo/release-action@v1.13.0
