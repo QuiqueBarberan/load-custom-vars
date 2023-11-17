@@ -51,17 +51,17 @@ jobs:
     steps:
       - name: Download Artifacts
         uses: actions/download-artifact@v3
-        with:
-          path: tempartifacts
 
-      - name: List File
-        id: listfiles
-        run: echo "listfiles="$(ls -m tempartifacts) >> "$GITHUB_OUTPUT"
+      # - name: List File
+      #   id: listfiles
+      #   run: |
+      #     archivos_con_ruta=("tempartifacts"/*)
+      #     echo "listfiles="$(ls -m tempartifacts) >> "$GITHUB_OUTPUT"
 
       - name: Create Pre-Release
         uses: ncipollo/release-action@v1.13.0
         with:
-          artifacts: ${{ steps.listfiles.outputs.listfiles }}
+          artifacts: .
           allowUpdates: true
           generateReleaseNotes: true
           prerelease: true
