@@ -61,3 +61,4 @@ jobs:
           allowUpdates: true
           generateReleaseNotes: true
           prerelease: true
+          tag: v1
